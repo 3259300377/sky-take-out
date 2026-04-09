@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import org.springframework.cache.annotation.CacheEvict;
 
 import java.util.List;
 
@@ -25,23 +26,28 @@ public interface SetmealMapper {
     @Select("select count(id) from setmeal where category_id = #{categoryId}")
     Integer countByCategoryId(Long id);
 
+    @CacheEvict(cacheNames = "setmealCache", key = "#setmeal.categoryId")
     @AutoFill(value = OperationType.INSERT)
     void save(Setmeal setmeal);
 
+    //分页查询
     Page<SetmealVO> page(SetmealPageQueryDTO setmealPageQueryDTO);
 
     @Select("select * from setmeal where id = #{id}")
     Setmeal selectById(Long id);
 
+    @CacheEvict(cacheNames = "setmealCache", allEntries = true)
     @Delete("delete from setmeal where id = #{setmealId}")
     void delete(Long setmealId);
 
     @Select("select s.*,c.name categoryName from setmeal s left join category c on c.id = s.category_id where s.id = #{id}")
     SetmealVO getById(Long id);
 
+    @CacheEvict(cacheNames = "setmealCache", allEntries = true)
     @AutoFill(OperationType.UPDATE)
     void update(Setmeal setmeal);
 
+    @CacheEvict(cacheNames = "setmealCache", allEntries = true)
     @Update("update setmeal set status = #{status} where id = #{id}")
     void changeStatus(Integer status, Long id);
 
