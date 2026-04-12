@@ -6,6 +6,7 @@ import com.sky.entity.ShoppingCart;
 import com.sky.result.Result;
 import com.sky.service.ShoppingCartService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,5 +34,12 @@ public class ShoppingCartController {
         Long userId = BaseContext.getCurrentId();
         List<ShoppingCart> list = shoppingCartService.queryShoppingCart(userId);
         return Result.success(list);
+    }
+
+    @DeleteMapping("/clean")
+    public Result cleanShoppingCart(){
+        log.info("正在清空购物车........");
+        shoppingCartService.cleanShoppingCart();
+        return Result.success();
     }
 }

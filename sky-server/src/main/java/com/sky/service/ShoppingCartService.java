@@ -9,4 +9,6 @@ public interface ShoppingCartService {
     void addShoppingCart(ShoppingCartDTO shoppingCartDTO);
 
     List<ShoppingCart> queryShoppingCart(Long userId);
+
+    void cleanShoppingCart();
 }
