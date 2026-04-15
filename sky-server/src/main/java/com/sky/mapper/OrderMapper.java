@@ -28,4 +28,7 @@ public interface OrderMapper {
      * @param orders
      */
     void update(Orders orders);
+
+    @Select("select count(id) from orders where status = #{status}")
+    Integer countStatus(Integer toBeConfirmed);
 }
