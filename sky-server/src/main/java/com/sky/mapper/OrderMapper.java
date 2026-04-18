@@ -41,4 +41,6 @@ public interface OrderMapper {
 
 
     Double getTurnover(Integer status, LocalDateTime beginTime, LocalDateTime endTime);
+
+    Integer countByMap(Map map);
 }
